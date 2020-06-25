@@ -13,7 +13,11 @@ This is an example of a CDK stack which creates ECS Service and adds the target 
     - ECS service.
     - Taskdefinition: as per configs/example.json
     - TargetGroup: To be added to shared listener for traffic routing.
-
+    
+## How to use the example?
+- Replace dummy values in `configs/example.json` as per requirements. 
+- Update task-definition as per your requirements. [Follow docs](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-ecs-readme.html)
+- Run `cdk synth`
 ## Useful commands
 
  * `npm run test`         perform the jest unit tests
