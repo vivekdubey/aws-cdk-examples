@@ -1,0 +1,26 @@
+{
+  "name": "ecs-shared-alb",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-app": "bin/app.js"
+  },
+  "scripts": {
+    "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
+    "cdk": "cdk",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.46.0",
+    "aws-cdk": "1.46.0",
+    "jest": "^25.5.0"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-ec2": "^1.46.0",
+    "@aws-cdk/aws-ecs": "^1.46.0",
+    "@aws-cdk/aws-ecs-patterns": "^1.46.0",
+    "@aws-cdk/aws-elasticloadbalancingv2": "^1.46.0",
+    "@aws-cdk/aws-s3": "^1.46.0",
+    "@aws-cdk/core": "1.46.0",
+    "joi": "^14.3.1"
+  }
+}
