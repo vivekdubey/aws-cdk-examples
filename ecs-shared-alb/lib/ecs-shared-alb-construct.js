@@ -12,17 +12,22 @@ const propsSchema = Joi.object({
   containerPort: Joi.number().integer().required().strict(),
   containerMemoryMB: Joi.number().integer().required().strict(),
   hostName: Joi.string().required(),
-  clusterName: Joi.string().required()
+  clusterName: Joi.string().required(),
+  rulePriority: Joi.number().integer().required().strict()
 });
 
 class EcsSharedAlbConstruct extends cdk.Construct {
   constructor(scope, id, props) {
     super(scope, id, props);
+
+    // Schema Validation
     const { error, value } = propsSchema.validate(props);
     if(error) {throw error.details }
-    const { listenerArn, vpcId, securityGroupId, containerPort, containerMemoryMB, hostName, clusterName} = props;
-    const vpc = ec2.Vpc.fromLookup(this, 'MyExistingVPC', { vpcId: vpcId });
-    const cluster = ecs.Cluster.fromClusterAttributes(this, 'ClusterToDeploy', { clusterName: clusterName } );
+
+    const { listenerArn, vpcId, securityGroupId, containerPort, containerMemoryMB, hostName, clusterName, rulePriority} = props;
+
+    const vpc = ec2.Vpc.fromLookup(this, 'MyExistingVPC', { vpcId });
+    const cluster = ecs.Cluster.fromClusterAttributes(this, 'ClusterToDeploy', { clusterName } );
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDef');
     const defaultContainer = taskDefinition.addContainer('DefaultContainer', {
         image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
@@ -43,7 +48,7 @@ class EcsSharedAlbConstruct extends cdk.Construct {
     const sharedListerner = elbv2.ApplicationListener.fromApplicationListenerAttributes(this, 'sharedListener', {listenerArn, securityGroup});
     sharedListerner.addTargetGroups('myService', {
       hostHeader: hostName,
-      priority: 1,
+      priority: rulePriority,
       targetGroups: [targetGroup]
     });
   }
