@@ -9,5 +9,6 @@
     "containerPort": 80,
     "containerMemoryMB": 512,
     "hostName": "myservice.local",
-    "clusterName": "MyCluster"
+    "clusterName": "MyCluster",
+    "rulePriority": 1
 }
